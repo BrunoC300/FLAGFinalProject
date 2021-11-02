@@ -1,0 +1,25 @@
+[
+  {
+    "_id": "5d7a514b5d2c12c7449be042",
+    "name": "Bruno Cunha",
+    "email": "bruno@gmail.com",
+    "password": "123456",
+    "peso": 82,
+    "altura": 1.78,
+    "idade": 24
+  },
+  {
+    "_id": "5d7a514b5d2c12c7449be043",
+    "name": "Beatriz Leal",
+    "email": "bea@gmail.com",
+    "password": "123456",
+    "peso": 55,
+    "altura": 1.62,
+    "idade": 20,
+    "exercicios_favoritos": [
+      {
+        "_id": "41224d776a326fb40f000001"
+      }
+    ]
+  }
+]

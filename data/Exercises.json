@@ -1,0 +1,17 @@
+[
+  {
+    "_id": "41224d776a326fb40f000001",
+    "name": "Pull-up",
+    "descricao": "A pull-up is an upper body strength training exercise. To perform a pullup, you start by hanging onto a pullup bar with your palms facing away from you and your body extended fully. You then pull yourself up until your chin is above the bar."
+  },
+  {
+    "_id": "41224d776a326fb40f000002",
+    "name": "Push-up",
+    "descricao": "The push-up is a staple upper-body exercise that you can do anywhere—you just need your bodyweight. It's considered a compound movement, meaning it involves multiple joints and stimulates large muscle groups. ... When your elbows are fully extended, and your body is back in a high plank position, you've completed your rep."
+  },
+  {
+    "_id": "41224d776a326fb40f000003",
+    "name": "Squat",
+    "descricao": "A squat is a strength exercise in which the trainee lowers their hips from a standing position and then stands back up. During the descent of a squat, the hip and knee joints flex while the ankle joint dorsiflexes; conversely the hip and knee joints extend and the ankle joint plantarflexes when standing up."
+  }
+]

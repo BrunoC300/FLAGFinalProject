@@ -7,6 +7,9 @@ const morgan = require("morgan");
 const ejs = require("ejs");
 const colors = require("colors");
 
+const Exercises = require("./models/Exercise");
+const User = require("./models/User");
+
 // Route files
 
 // Load env vars
@@ -29,10 +32,30 @@ if (process.env.NODE_ENV === "development") {
 }
 // Mount routers
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
   res.render("index");
+});
+app.get("/exercises", (req, res) => {
+  Exercises.find({}, function (err, exercises) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("exercises", { exercises: exercises });
+    }
+  });
+});
+app.get("/users", (req, res) => {
+  User.findOne({ name: "Beatriz Leal" })
+    .populate("exercicios_favoritos")
+    .exec(function (err, users) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.render("users", { users: users });
+      }
+    });
 });
 
 const server = app.listen(

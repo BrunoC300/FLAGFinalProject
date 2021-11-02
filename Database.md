@@ -14,6 +14,7 @@ USER TEM:
 TREINOS:
 
 - ID{
+
   - CRIADO POR:
   - TIPO
   - DURACAO
@@ -21,6 +22,7 @@ TREINOS:
   - PREÇO
   - EXERCICIOS: [
     {
+
     - ID
     - NOME
     - TOTAL DE SETS
@@ -29,3 +31,8 @@ TREINOS:
     - IMAGE
       }
       ]}
+
+      <% user.forEach(function(exercise){ %>
+      <p><%= exercise.name %></p>
+      <p><%= exercise.descricao %></p>
+      <% }); %>

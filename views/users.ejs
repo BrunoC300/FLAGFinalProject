@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1><%= users.name %></h1>
+    <p><%= users.email %></p>
+    <p><%= users.peso %></p>
+    <p><%= users.idade %></p>
+    <p><%= users.altura %></p>
+    <% users.exercicios_favoritos.forEach(function(exercicios){ %>
+    <h4><%= exercicios.name %></h4>
+    <h4><%= exercicios.descricao %></h4>
+    <h4><%= exercicios.image %></h4>
+    <% }) %>
+  </body>
+</html>
