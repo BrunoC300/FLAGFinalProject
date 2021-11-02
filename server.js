@@ -47,13 +47,24 @@ app.get("/exercises", (req, res) => {
   });
 });
 app.get("/users", (req, res) => {
-  User.findOne({ name: "Beatriz Leal" })
+  User.find()
     .populate("exercicios_favoritos")
     .exec(function (err, users) {
       if (err) {
         console.log(err);
       } else {
         res.render("users", { users: users });
+      }
+    });
+});
+app.get("/users/:id", (req, res) => {
+  User.findById(req.params.id)
+    .populate("exercicios_favoritos")
+    .exec(function (err, userFound) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.render("userOne", { user: userFound });
       }
     });
 });
