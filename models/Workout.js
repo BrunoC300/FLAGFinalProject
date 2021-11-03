@@ -7,6 +7,10 @@ const WorkoutSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  nome: {
+    type: String,
+    required: [true, "Please insert the name of the Workout"],
+  },
   tipo: {
     type: String,
     required: [true, "Please insert a type"],
@@ -18,12 +22,12 @@ const WorkoutSchema = new mongoose.Schema({
     select: false,
   },
   grupoMuscular: {
-    type: Number,
+    type: String,
     required: [true, "Please insert the muscle group"],
   },
   preco: {
     type: Number,
-    required: [true, "Please add an age"],
+    required: [true, "Please add the price"],
   },
   lista_exercicios: [
     {

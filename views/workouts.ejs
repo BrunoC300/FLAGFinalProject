@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <% workouts.forEach(function(workout){ %>
+    <h1><%= workout.createdBy.name %></h1>
+    <p><%= workout.nome %></p>
+    <p><%= workout.tipo %></p>
+    <p><%= workout.duracao %></p>
+    <p><%= workout.grupoMuscular %></p>
+    <p><%= workout.preco %></p>
+    <% workout.lista_exercicios.forEach(function(exercicios){ %>
+    <h4><%= exercicios.exercicio.name %></h4>
+    <h4><%= exercicios.descricao %></h4>
+    <h4><%= exercicios.image %></h4>
+    <% }) %> <% }) %>
+  </body>
+</html>

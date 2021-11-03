@@ -9,6 +9,7 @@ const colors = require("colors");
 
 const Exercises = require("./models/Exercise");
 const User = require("./models/User");
+const Workout = require("./models/Workout");
 
 // Route files
 
@@ -68,7 +69,18 @@ app.get("/users/:id", (req, res) => {
       }
     });
 });
-
+app.get("/workouts", (req, res) => {
+  Workout.find()
+    .populate("lista_exercicios.exercicio")
+    .populate("createdBy")
+    .exec(function (err, workouts) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.render("workouts", { workouts: workouts });
+      }
+    });
+});
 const server = app.listen(
   PORT,
   console.log(
