@@ -6,12 +6,18 @@ const cors = require("cors");
 const morgan = require("morgan");
 const ejs = require("ejs");
 const colors = require("colors");
+const flash = require("connect-flash");
+const jwt = require("jsonwebtoken");
+const session = require("express-session");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
 
 const Exercises = require("./models/Exercise");
 const User = require("./models/User");
 const Workout = require("./models/Workout");
 
 // Route files
+const userRoutes = require("./routes/users");
 
 // Load env vars
 dotenv.config({ path: "./config/config.env" });
@@ -21,12 +27,41 @@ connectDB();
 
 const app = express();
 
+const sessionConfig = {
+  secret: "thisshouldbeabettersecret!",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true, //For extra security
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  },
+};
+app.use(session(sessionConfig));
+app.use(flash());
+
 // Body parser
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set("view engine", "ejs");
 // Cookie parser
 app.use(cookieParser());
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+// use static authenticate method of model in LocalStrategy
+passport.use(new LocalStrategy(User.authenticate()));
+
+// use static serialize and deserialize of model for passport session support
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  next();
+});
 // Dev logging middleware
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -34,6 +69,8 @@ if (process.env.NODE_ENV === "development") {
 // Mount routers
 
 const PORT = process.env.PORT || 3000;
+
+app.use("/", userRoutes);
 
 app.get("/", (req, res) => {
   res.render("index");
@@ -81,6 +118,18 @@ app.get("/workouts", (req, res) => {
       }
     });
 });
+// app.post("/register", async(req, res) => {
+//   const { name, email, password } = req.body;
+
+//   // Create user
+//   const user = await User.create({
+//     name,
+//     email,
+//     password,
+//   });
+//   sendTokenResponse(user, 200, res);
+// });
+
 const server = app.listen(
   PORT,
   console.log(

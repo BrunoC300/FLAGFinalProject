@@ -1,12 +1,7 @@
 const mongoose = require("mongoose");
-// const bcrypt = require("bcryptjs");
-// const jwt = require("jsonwebtoken");
+const passportLocalMongoose = require("passport-local-mongoose");
 
 const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "Please add a name"],
-  },
   email: {
     type: String,
     required: [true, "Please add an email"],
@@ -16,14 +11,6 @@ const UserSchema = new mongoose.Schema({
       "Please add a valid email",
     ],
   },
-  password: {
-    type: String,
-    required: [true, "Please add a password"],
-    minlength: 6,
-    select: false,
-  },
-  resetPasswordToken: String,
-  resetPasswordExpire: Date,
   createdAt: {
     type: Date,
     default: Date.now,
@@ -54,6 +41,8 @@ const UserSchema = new mongoose.Schema({
     },
   ],
 });
+
+UserSchema.plugin(passportLocalMongoose);
 
 // // Encrypt password using bcrypt
 // UserSchema.pre("save", async function (next) {
