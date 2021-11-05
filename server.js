@@ -12,6 +12,7 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
+const ExpressError = require("./utils/ExpressError");
 
 const Exercises = require("./models/Exercise");
 const User = require("./models/User");
@@ -78,6 +79,7 @@ app.use("/", userRoutes);
 
 app.get("/", (req, res) => {
   res.render("index");
+  req.flash("success", "Bem vindo!");
 });
 app.get("/exercises", (req, res) => {
   Exercises.find({}, function (err, exercises) {
@@ -133,6 +135,16 @@ app.get("/workouts", (req, res) => {
 //   });
 //   sendTokenResponse(user, 200, res);
 // });
+
+//Caso não encontre nenhuma das rotas por nós definidas mostra o erro "Page Not Found"
+app.all("*", (req, res, next) => {
+  next(new ExpressError("Page Not Found", 404));
+});
+app.use((err, req, res, next) => {
+  const { statusCode = 500 } = err;
+  if (!err.message) err.message = "Oh No, Something Went Wrong!";
+  res.status(statusCode).render("error", { err });
+});
 
 const server = app.listen(
   PORT,

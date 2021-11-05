@@ -15,10 +15,10 @@ router.post(
       // Create user
       const user = new User({ username, email, peso, altura, idade });
       const registeredUser = await User.register(user, password);
-      //req.flash('success',"Welcome!");
+      req.flash("success", "Welcome!");
       res.redirect("/workouts");
     } catch (e) {
-      //req.flash('error', e.message);
+      req.flash("error", e.message);
       res.redirect("/register");
     }
   })
