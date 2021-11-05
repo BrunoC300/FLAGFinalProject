@@ -1,20 +1,26 @@
 const express = require("express");
 const User = require("../models/User");
+const catchAsync = require("../utils/catchAsync");
 const router = express.Router();
 
 router.get("/register", (req, res) => {
   res.render("users/register");
 });
-router.post("/register", async (req, res) => {
-  console.log(req.body.username);
-  console.log(req.body.email);
-  const { username, email, password, peso, altura, idade } = req.body;
+router.post(
+  "/register",
+  catchAsync(async (req, res) => {
+    try {
+      const { username, email, password, peso, altura, idade } = req.body;
 
-  // Create user
-  const user = new User({ username, email, peso, altura, idade });
-  const registeredUser = await User.register(user, password);
-  console.log(registeredUser);
-  //req.flash("Welcome!");
-  res.redirect("/workouts");
-});
+      // Create user
+      const user = new User({ username, email, peso, altura, idade });
+      const registeredUser = await User.register(user, password);
+      //req.flash('success',"Welcome!");
+      res.redirect("/workouts");
+    } catch (e) {
+      //req.flash('error', e.message);
+      res.redirect("/register");
+    }
+  })
+);
 module.exports = router;

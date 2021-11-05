@@ -32,7 +32,11 @@ TREINOS:
       }
       ]}
 
-      <% user.forEach(function(exercise){ %>
-      <p><%= exercise.name %></p>
-      <p><%= exercise.descricao %></p>
-      <% }); %>
+     <div class="navbar-nav ml-auto">
+        <% if(!currentUser) {%>
+        <a class="nav-link" href="/login">Login</a>
+        <a class="nav-link" href="/register">Register</a>
+        <% } else {%>
+        <a class="nav-link" href="/logout">Logout</a>
+        <% } %>
+      </div>

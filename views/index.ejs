@@ -1,1 +1,130 @@
-<h1>Helooo</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="tryitForm" class="form-horizontal">
+      <div class="form-group">
+        <label class="col-md-3 control-label">Full name</label>
+        <div class="col-md-4">
+          <input type="text" class="form-control" name="firstName" />
+        </div>
+        <div class="col-md-4">
+          <input type="text" class="form-control" name="lastName" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-3 control-label">Email address</label>
+        <div class="col-md-6">
+          <input type="text" class="form-control" name="email" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-3 control-label">Gender</label>
+        <div class="col-md-6">
+          <div class="radio">
+            <label
+              ><input type="radio" name="gender" value="male" /> Male</label
+            >
+          </div>
+          <div class="radio">
+            <label
+              ><input type="radio" name="gender" value="female" /> Female</label
+            >
+          </div>
+          <div class="radio">
+            <label
+              ><input type="radio" name="gender" value="other" /> Other</label
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-offset-3 col-md-8">
+          <button type="submit" class="btn btn-primary">Say hello</button>
+        </div>
+      </div>
+    </form>
+    <script>
+      $(document).ready(function () {
+        $("#tryitForm").bootstrapValidator({
+          feedbackIcons: {
+            valid: "glyphicon glyphicon-ok",
+            invalid: "glyphicon glyphicon-remove",
+            validating: "glyphicon glyphicon-refresh",
+          },
+          fields: {
+            firstName: {
+              validators: {
+                notEmpty: {
+                  message: "The first name is required and cannot be empty",
+                },
+              },
+            },
+            lastName: {
+              validators: {
+                notEmpty: {
+                  message: "The last name is required and cannot be empty",
+                },
+              },
+            },
+            email: {
+              validators: {
+                notEmpty: {
+                  message: "The email address is required",
+                },
+                emailAddress: {
+                  message: "The input is not a valid email address",
+                },
+              },
+            },
+            gender: {
+              validators: {
+                notEmpty: {
+                  message: "The gender is required",
+                },
+              },
+            },
+          },
+          submitHandler: function (validator, form, submitButton) {
+            var fullName = [
+              validator.getFieldElements("firstName").val(),
+              validator.getFieldElements("lastName").val(),
+            ].join(" ");
+            alert("Hello " + fullName);
+          },
+        });
+      });
+    </script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

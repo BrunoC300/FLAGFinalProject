@@ -2,12 +2,13 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 const cors = require("cors");
 const morgan = require("morgan");
 const ejs = require("ejs");
+const ejsMate = require("ejs-mate");
 const colors = require("colors");
 const flash = require("connect-flash");
-const jwt = require("jsonwebtoken");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -27,6 +28,16 @@ connectDB();
 
 const app = express();
 
+app.engine("ejs", ejsMate);
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
+// //app.use(methodOverride("_method"));
+// app.use(express.static(path.join(__dirname, "public")));
+
 const sessionConfig = {
   secret: "thisshouldbeabettersecret!",
   resave: false,
@@ -39,13 +50,6 @@ const sessionConfig = {
 };
 app.use(session(sessionConfig));
 app.use(flash());
-
-// Body parser
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.set("view engine", "ejs");
-// Cookie parser
-app.use(cookieParser());
 
 app.use(passport.initialize());
 app.use(passport.session());
