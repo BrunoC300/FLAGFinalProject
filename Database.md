@@ -40,3 +40,8 @@ TREINOS:
         <a class="nav-link" href="/logout">Logout</a>
         <% } %>
       </div>
+
+    if(!req.isAuthenticated()){
+    req.flash('error','Deve ter login feito para efetuar essa ação');
+    return res.redirect('login);
+    }

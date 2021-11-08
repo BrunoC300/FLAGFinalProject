@@ -18,6 +18,8 @@ const Exercises = require("./models/Exercise");
 const User = require("./models/User");
 const Workout = require("./models/Workout");
 
+const isLoggedIn = require("./middleware/validations");
+
 // Route files
 const userRoutes = require("./routes/users");
 
@@ -63,6 +65,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
@@ -77,7 +80,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use("/", userRoutes);
 
-app.get("/", (req, res) => {
+app.get("/", isLoggedIn.isLoggedIn, (req, res) => {
   res.render("index");
   req.flash("success", "Bem vindo!");
 });
