@@ -1,5 +1,9 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 const express = require("express");
-const dotenv = require("dotenv");
+// const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const cookieParser = require("cookie-parser");
 const path = require("path");
@@ -22,9 +26,10 @@ const isLoggedIn = require("./middleware/validations");
 
 // Route files
 const userRoutes = require("./routes/users");
+const exerciseRoutes = require("./routes/exercises");
 
 // Load env vars
-dotenv.config({ path: "./config/config.env" });
+// dotenv.config({ path: "./config/config.env" });
 
 // Connect to database
 connectDB();
@@ -70,29 +75,19 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   next();
 });
-// Dev logging middleware
-if (process.env.NODE_ENV === "development") {
-  app.use(morgan("dev"));
-}
+
 // Mount routers
 
 const PORT = process.env.PORT || 3000;
 
+app.use("/", exerciseRoutes);
 app.use("/", userRoutes);
 
 app.get("/", isLoggedIn.isLoggedIn, (req, res) => {
   res.render("index");
   req.flash("success", "Bem vindo!");
 });
-app.get("/exercises", (req, res) => {
-  Exercises.find({}, function (err, exercises) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render("exercises", { exercises: exercises });
-    }
-  });
-});
+
 app.get("/users", (req, res) => {
   User.find()
     .populate("exercicios_favoritos")
@@ -127,17 +122,6 @@ app.get("/workouts", (req, res) => {
       }
     });
 });
-// app.post("/register", async(req, res) => {
-//   const { name, email, password } = req.body;
-
-//   // Create user
-//   const user = await User.create({
-//     name,
-//     email,
-//     password,
-//   });
-//   sendTokenResponse(user, 200, res);
-// });
 
 //Caso não encontre nenhuma das rotas por nós definidas mostra o erro "Page Not Found"
 app.all("*", (req, res, next) => {

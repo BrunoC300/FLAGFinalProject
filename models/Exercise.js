@@ -12,9 +12,11 @@ const ExerciseSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please add an exercise description"],
   },
-  image: {
-    data: Buffer,
-    contentType: String,
-  },
+  images: [
+    {
+      url: String,
+      filename: String,
+    },
+  ],
 });
 module.exports = mongoose.model("Exercise", ExerciseSchema);
