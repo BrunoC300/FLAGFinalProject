@@ -3,7 +3,6 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const express = require("express");
-// const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const cookieParser = require("cookie-parser");
 const path = require("path");
@@ -45,7 +44,7 @@ app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public")));
 
 const sessionConfig = {
   secret: "thisshouldbeabettersecret!",
@@ -127,7 +126,7 @@ app.get("/workouts", (req, res) => {
 
 //Caso não encontre nenhuma das rotas por nós definidas mostra o erro "Page Not Found"
 app.all("*", (req, res, next) => {
-  next(new ExpressError("Page Not Found", 404));
+  res.status(404).render("404");
 });
 app.use((err, req, res, next) => {
   const { statusCode = 500 } = err;

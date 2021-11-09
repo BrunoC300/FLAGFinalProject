@@ -20,16 +20,6 @@
         />
         <div class="valid-feedback">Looks good!</div>
       </div>
-
-      <input type="file" name="image" id="" multiple />
-      <!-- <div class="mb-3">
-                <label class="form-label" for="image">Image Url</label>
-                <input class="form-control" type="text" id="image" name="campground[image]" required>
-                <div class="valid-feedback">
-                    Looks good!
-                </div>
-            </div> -->
-
       <div class="mb-3">
         <label class="form-label" for="description">Description</label>
         <textarea
@@ -41,6 +31,21 @@
         ></textarea>
         <div class="valid-feedback">Looks good!</div>
       </div>
+      <div class="mb-3 form-file custom-file">
+        <input
+          type="file"
+          class="form-file-input"
+          id="image"
+          name="image"
+          multiple
+        />
+        <label class="form-file-label" for="image">
+          <span class="form-file-text custom-file-label"
+            >Adicionar mais imagens</span
+          >
+          <span class="form-file-button">Browse</span>
+        </label>
+      </div>
       <div class="mb-3">
         <button class="btn btn-success">Add Campground</button>
       </div>
@@ -48,3 +53,8 @@
     <a href="/campgrounds">All Campgrounds</a>
   </div>
 </div>
+<script>
+  $(document).ready(function () {
+    bsCustomFileInput.init();
+  });
+</script>
