@@ -54,11 +54,20 @@ router.put(
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const exercise = await Exercise.findByIdAndUpdate(id, {
-      ...req.body.exercise,
+      ...req.body,
     });
     const imgs = req.files.map((f) => ({ url: f.path, filename: f.filename }));
     exercise.images.push(...imgs);
     await exercise.save();
+    if (req.body.deleteImages) {
+      //   for (let filename of req.body.deleteImages) {
+      //     await storage.uploader.destroy(filename);
+      //   }
+      //Tirar da BD todas as imagens onde o filename = ao filename do array "deleteImages"
+      await exercise.updateOne({
+        $pull: { images: { filename: { $in: req.body.deleteImages } } },
+      });
+    }
     req.flash("success", "Successfully updated campground!");
     res.redirect(`/exercises/${exercise._id}`);
   })

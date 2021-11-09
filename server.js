@@ -126,7 +126,8 @@ app.get("/workouts", (req, res) => {
 
 //Caso não encontre nenhuma das rotas por nós definidas mostra o erro "Page Not Found"
 app.all("*", (req, res, next) => {
-  res.status(404).render("404");
+  // res.status(404).render("404");
+  next(new ExpressError("Page Not Found", 404));
 });
 app.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
