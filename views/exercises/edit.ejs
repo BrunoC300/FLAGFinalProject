@@ -1,0 +1,47 @@
+<% layout('layouts/boilerplate')%>
+<div class="row">
+  <h1 class="text-center">Editar Exercicio</h1>
+  <div class="col-6 offset-3">
+    <form
+      action="/exercises/<%=exercise._id%>?_method=PUT"
+      method="POST"
+      novalidate
+      class="validated-form"
+      enctype="multipart/form-data"
+    >
+      <div class="mb-3">
+        <label class="form-label" for="title">Nome</label>
+        <input
+          class="form-control"
+          type="text"
+          id="name"
+          name="name"
+          value="<%=exercise.name %>"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="description">Descrição</label>
+        <textarea
+          class="form-control"
+          type="text"
+          id="descricao"
+          name="descricao"
+          required
+        >
+<%= exercise.descricao%></textarea
+        >
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="image">Adicionar Imagens</label>
+        <input type="file" name="image" id="image" multiple />
+      </div>
+      <div class="mb-3">
+        <button class="btn btn-info">Update Exercicio</button>
+      </div>
+    </form>
+    <a href="/exercises/<%= exercise._id%>">Voltar</a>
+  </div>
+</div>

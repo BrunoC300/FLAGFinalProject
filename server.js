@@ -15,6 +15,7 @@ const colors = require("colors");
 const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("passport");
+const methodOverride = require("method-override");
 const LocalStrategy = require("passport-local");
 const ExpressError = require("./utils/ExpressError");
 
@@ -39,11 +40,11 @@ const app = express();
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+app.use(methodOverride("_method"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-// //app.use(methodOverride("_method"));
 // app.use(express.static(path.join(__dirname, "public")));
 
 const sessionConfig = {
@@ -58,6 +59,7 @@ const sessionConfig = {
 };
 app.use(session(sessionConfig));
 app.use(flash());
+app.use(morgan("tiny"));
 
 app.use(passport.initialize());
 app.use(passport.session());

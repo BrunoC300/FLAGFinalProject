@@ -1,19 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <% exercises.forEach(function(exercise){ %>
-    <p><%= exercise.name %></p>
-    <p><%= exercise.descricao %></p>
-    <% exercise.images.forEach((img, i) => { %>
-    <div class="carousel-item <%= i === 0 ? 'active' : ''%>">
-      <img src="<%= img.url%>" class="d-block w-100" alt="" />
-    </div>
-    <% }) %> <% }); %>
-  </body>
-</html>
+<% layout('layouts/boilerplate')%> <% exercises.forEach(function(exercise){ %>
+<p><%= exercise.name %></p>
+<p><%= exercise.descricao %></p>
+<% exercise.images.forEach((img, i) => { %>
+<div class="carousel-item <%= i === 0 ? 'active' : ''%>">
+  <img src="<%= img.url%>" class="d-block w-100" alt="" />
+</div>
+<p><a href=""><%= exercise.id %></a></p>
+<% }) %> <% }); %>

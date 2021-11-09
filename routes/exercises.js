@@ -6,15 +6,13 @@ const { storage } = require("../cloudinary");
 const Exercise = require("../models/Exercise");
 const upload = multer({ storage });
 
-router.get("/exercises", (req, res) => {
-  Exercise.find({}, function (err, exercises) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render("exercises/show", { exercises: exercises });
-    }
-  });
-});
+router.get(
+  "/exercises",
+  catchAsync(async (req, res) => {
+    const exercises = await Exercise.find({});
+    res.render("exercises/show", { exercises: exercises });
+  })
+);
 router.get("/exercises/new", (req, res) => {
   res.render("exercises/new");
 });
@@ -34,6 +32,45 @@ router.post(
     exercise.save();
     req.flash("success", "Exercicio Criado!");
     res.redirect("exercises/show");
+  })
+);
+
+router.get(
+  "/exercises/:id/edit",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const exercise = await Exercise.findById(id);
+    if (!exercise) {
+      req.flash("error", "Esse exercicio não existe!");
+      return res.redirect("/exercises");
+    }
+    res.render("exercises/edit", { exercise });
+  })
+);
+
+router.put(
+  "/exercises/:id",
+  upload.array("image"),
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const exercise = await Exercise.findByIdAndUpdate(id, {
+      ...req.body.exercise,
+    });
+    const imgs = req.files.map((f) => ({ url: f.path, filename: f.filename }));
+    exercise.images.push(...imgs);
+    await exercise.save();
+    req.flash("success", "Successfully updated campground!");
+    res.redirect(`/exercises/${exercise._id}`);
+  })
+);
+
+router.delete(
+  "/exercises/:id",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    await Exercise.findByIdAndDelete(id);
+    res.flash("Success", "Exercicio Apagado!");
+    res.redirect("/exercises");
   })
 );
 
