@@ -81,7 +81,7 @@ app.use((req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 
-app.use("/", exerciseRoutes);
+app.use("/exercises", exerciseRoutes);
 app.use("/", userRoutes);
 
 app.get("/", isLoggedIn.isLoggedIn, (req, res) => {
