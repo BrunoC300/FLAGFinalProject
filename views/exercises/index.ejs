@@ -6,7 +6,14 @@
   <img src="<%= img.url%>" class="d-block w-100" alt="" />
 </div>
 <% }) %>
-<a class="btn btn-primary" href="/exercises/<%=exercise._id%>"
-  >View <%=exercise.name%></a
->
+<div>
+  <a class="btn btn-primary" href="/exercises/<%=exercise._id%>"
+    >View <%=exercise.name%></a
+  >
+  <% if(!currentUser.exercicios_favoritos.includes( exercise._id )) {%>
+  <a href="/add/<%= exercise._id%>">Favorite</a>
+  <% }else{ %>
+  <a href="/remove/<%= exercise._id%>">Remove from Favorites</a>
+  <%} %>
+</div>
 <% }); %>

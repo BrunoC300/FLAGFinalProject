@@ -18,7 +18,7 @@ const methodOverride = require("method-override");
 const LocalStrategy = require("passport-local");
 const ExpressError = require("./utils/ExpressError");
 
-const Exercises = require("./models/Exercise");
+const Exercise = require("./models/Exercise");
 const User = require("./models/User");
 const Workout = require("./models/Workout");
 
@@ -119,9 +119,17 @@ app.get("/workouts", (req, res) => {
       if (err) {
         console.log(err);
       } else {
+        console.log(req.user);
         res.render("workouts", { workouts: workouts });
       }
     });
+});
+app.get("/add/:id", async (req, res) => {
+  const { id } = req.params;
+  const exercise = await Exercise.findById(id);
+  const user = await User.findById(req.user._id);
+  user.exercicios_favoritos.push(exercise);
+  user.save();
 });
 
 //Caso não encontre nenhuma das rotas por nós definidas mostra o erro "Page Not Found"

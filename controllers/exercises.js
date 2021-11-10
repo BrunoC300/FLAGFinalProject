@@ -43,6 +43,7 @@ module.exports.createExercise = async (req, res) => {
 module.exports.showExercise = async (req, res) => {
   const { id } = req.params;
   const exercise = await Exercise.findById(id);
+  console.log(exercise);
   if (!exercise) {
     req.flash("error", "Esse exercicio não existe!");
     return res.redirect("/exercises");
