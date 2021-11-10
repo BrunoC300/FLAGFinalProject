@@ -86,7 +86,7 @@ module.exports.updateExercise = async (req, res) => {
       $pull: { images: { filename: { $in: req.body.deleteImages } } },
     });
   }
-  req.flash("success", "Successfully updated campground!");
+  req.flash("success", "Exercicio atualizado!");
   res.redirect(`/exercises/${exercise._id}`);
 };
 

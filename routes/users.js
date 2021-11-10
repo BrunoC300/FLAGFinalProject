@@ -44,7 +44,6 @@ router.post(
     const redirectUrl = req.session.returnTo || "/workouts";
     delete req.session.returnTo;
     res.redirect(redirectUrl);
-    console.log(req.user.exercicios_favoritos);
   }
 );
 

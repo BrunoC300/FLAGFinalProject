@@ -1,19 +1,42 @@
-<% layout('layouts/boilerplate')%> <% exercises.forEach(function(exercise){ %>
-<p><%= exercise.name %></p>
-<p><%= exercise.descricao %></p>
-<% exercise.images.forEach((img, i) => { %>
-<div class="carousel-item <%= i === 0 ? 'active' : ''%>">
-  <img src="<%= img.url%>" class="d-block w-100" alt="" />
+<% layout('layouts/boilerplate')%>
+
+<div class="container">
+  <h1>All Exercises</h1>
+
+  <% for (let exercise of exercises){%>
+  <div class="card mb-3">
+    <div class="row">
+      <div class="col-md-4">
+        <%if(exercise.images.length) {%>
+        <img class="img-fluid" alt="" src="<%=exercise.images[0].url%>" />
+        <% }else {%>
+        <img
+          class="img-fluid"
+          alt=""
+          src="https://res.cloudinary.com/douqbebwk/image/upload/v1600103881/YelpCamp/lz8jjv2gyynjil7lswf4.png"
+        />
+        <% } %>
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title"><%= exercise.name %></h5>
+          <p class="card-text"><%= exercise.descricao %></p>
+
+          <a class="btn btn-primary" href="/exercises/<%=exercise._id%>"
+            >View <%=exercise.name%></a
+          >
+          <% if(currentUser && !currentUser.exercicios_favoritos.includes(
+          exercise._id )) {%>
+          <a class="btn btn-danger" href="/add/<%= exercise._id%>">Favorite</a>
+          <% }else if(currentUser && currentUser.exercicios_favoritos.includes(
+          exercise._id )){ %>
+          <a class="btn btn-danger" href="/remove/<%= exercise._id%>"
+            >Remove from Favorites</a
+          >
+          <%} %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% }%>
 </div>
-<% }) %>
-<div>
-  <a class="btn btn-primary" href="/exercises/<%=exercise._id%>"
-    >View <%=exercise.name%></a
-  >
-  <% if(!currentUser.exercicios_favoritos.includes( exercise._id )) {%>
-  <a href="/add/<%= exercise._id%>">Favorite</a>
-  <% }else{ %>
-  <a href="/remove/<%= exercise._id%>">Remove from Favorites</a>
-  <%} %>
-</div>
-<% }); %>
