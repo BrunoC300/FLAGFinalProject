@@ -27,10 +27,12 @@
           >
           <% if(currentUser && !currentUser.exercicios_favoritos.includes(
           exercise._id )) {%>
-          <a class="btn btn-danger" href="/add/<%= exercise._id%>">Favorite</a>
+          <a class="btn btn-success" href="exercises/add/<%= exercise._id%>"
+            >Add to Favorites</a
+          >
           <% }else if(currentUser && currentUser.exercicios_favoritos.includes(
           exercise._id )){ %>
-          <a class="btn btn-danger" href="/remove/<%= exercise._id%>"
+          <a class="btn btn-danger" href="exercises/remove/<%= exercise._id%>"
             >Remove from Favorites</a
           >
           <%} %>

@@ -119,32 +119,13 @@ app.get("/workouts", (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        console.log(req.user._id);
         res.render("workouts", { workouts: workouts });
       }
     });
 });
-app.get("/add/:id", async (req, res) => {
-  const { id } = req.params;
-  const exercise = await Exercise.findById(id);
-  const user = await User.findById(req.user._id);
-  user.exercicios_favoritos.push(exercise);
-  user.save();
-  req.flash("success", "Exercicio adicionado aos favoritos");
-  setTimeout(function () {
-    res.redirect("/exercises");
-  }, 1000);
-});
+app.get("/add/:id", async (req, res) => {});
 
-app.get("/remove/:id", async (req, res) => {
-  const { id } = req.params;
-  const userID = req.user._id;
-  await User.findByIdAndUpdate(userID, { $pull: { exercicios_favoritos: id } });
-  req.flash("success", "Exercicio Removido dos favoritos");
-  setTimeout(function () {
-    res.redirect("/exercises");
-  }, 1000);
-});
+app.get("/remove/:id", async (req, res) => {});
 
 //Caso não encontre nenhuma das rotas por nós definidas mostra o erro "Page Not Found"
 app.all("*", (req, res, next) => {

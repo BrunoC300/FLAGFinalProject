@@ -22,4 +22,8 @@ router
 
 router.get("/:id/edit", isLoggedIn, catchAsync(exercise.renderEditForm));
 
+router.get("/add/:id", isLoggedIn, catchAsync(exercise.addToFavorites));
+
+router.get("/remove/:id", isLoggedIn, catchAsync(exercise.removeFromFavorites));
+
 module.exports = router;

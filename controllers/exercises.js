@@ -1,5 +1,6 @@
 const { cloudinary } = require("../cloudinary");
 const Exercise = require("../models/Exercise");
+const User = require("../models/User");
 
 // @desc      Get all exercises
 // @route     GET /exercises
@@ -99,4 +100,26 @@ module.exports.deleteExercise = async (req, res) => {
   await Exercise.findByIdAndDelete(id);
   res.flash("Success", "Exercicio Apagado!");
   res.redirect("/exercises");
+};
+
+module.exports.addToFavorites = async (req, res) => {
+  const { id } = req.params;
+  const exercise = await Exercise.findById(id);
+  const user = await User.findById(req.user._id);
+  user.exercicios_favoritos.push(exercise);
+  user.save();
+  req.flash("success", "Exercicio adicionado aos favoritos");
+  setTimeout(function () {
+    res.redirect("/exercises");
+  }, 1000);
+};
+
+module.exports.removeFromFavorites = async (req, res) => {
+  const { id } = req.params;
+  const userID = req.user._id;
+  await User.findByIdAndUpdate(userID, { $pull: { exercicios_favoritos: id } });
+  req.flash("success", "Exercicio Removido dos favoritos");
+  setTimeout(function () {
+    res.redirect("/exercises");
+  }, 1000);
 };
