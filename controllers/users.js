@@ -6,22 +6,40 @@ module.exports.renderRegister = (req, res) => {
 
 module.exports.register = async (req, res, next) => {
   try {
-    const { username, email, password, peso, altura, idade } = req.body;
+    const { username, email, password } = req.body;
 
     // Create user
-    const user = new User({ username, email, peso, altura, idade });
+    const user = new User({ username, email });
     const registeredUser = await User.register(user, password);
     req.login(registeredUser, (err) => {
       if (err) {
         return next(err);
       }
       req.flash("success", "Bem vindo!");
-      res.redirect("/workouts");
+      res.redirect("/user/completeProfile");
     });
   } catch (e) {
     req.flash("error", e.message);
     res.redirect("/register");
   }
+};
+
+module.exports.completeProfile = async (req, res, next) => {
+  console.log("ENTREI");
+  const { peso, idade, altura, tipo, nivel } = req.body;
+  const id = req.user._id;
+  console.log(id);
+  const user = await User.findByIdAndUpdate(id, {
+    peso: peso,
+    idade: idade,
+    altura: altura,
+    tipo: tipo,
+    nivel: nivel,
+  });
+  await user.save();
+  req.flash("Success", "Perfil Completo");
+  res.redirect("/exercises");
+  console.log(user);
 };
 
 module.exports.renderLogin = (req, res) => {

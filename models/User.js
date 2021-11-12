@@ -17,15 +17,18 @@ const UserSchema = new mongoose.Schema({
   },
   peso: {
     type: Number,
-    required: [true, "Please add a weight"],
   },
   idade: {
     type: Number,
-    required: [true, "Please add an age"],
   },
   altura: {
     type: Number,
-    required: [true, "Please add a height"],
+  },
+  tipo: {
+    type: String,
+  },
+  nivel: {
+    type: String,
   },
   updated: { type: Date, default: Date.now },
   exercicios_favoritos: [

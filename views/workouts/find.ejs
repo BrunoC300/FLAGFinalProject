@@ -1,0 +1,229 @@
+<% layout('layouts/boilerplate')%>
+<!--   Big container   -->
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+      <!--      Wizard container        -->
+      <div class="wizard-container">
+        <div class="card wizard-card" data-color="orange" id="wizardProfile">
+          <form action="/user/completeProfile" method="post">
+            <div class="wizard-header text-center">
+              <h3 class="wizard-title">Complete your profile</h3>
+              <p class="category">
+                This information will let us know more about you.
+              </p>
+            </div>
+
+            <div class="wizard-navigation">
+              <div class="progress-with-circle">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  aria-valuenow="1"
+                  aria-valuemin="1"
+                  aria-valuemax="3"
+                  style="width: 21%"
+                ></div>
+              </div>
+              <ul>
+                <li>
+                  <a href="#about" data-toggle="tab">
+                    <div class="icon-circle">
+                      <i class="far fa-user"></i>
+                    </div>
+                    Acerca
+                  </a>
+                </li>
+                <li>
+                  <a href="#account" data-toggle="tab">
+                    <div class="icon-circle">
+                      <i class="fas fa-dumbbell"></i>
+                    </div>
+                    Objetivo
+                  </a>
+                </li>
+                <li>
+                  <a href="#address" data-toggle="tab">
+                    <div class="icon-circle">
+                      <i class="fas fa-balance-scale"></i>
+                    </div>
+                    Nível
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="tab-content">
+              <div class="tab-pane" id="about">
+                <div class="row">
+                  <h5 class="info-text">Please tell us more about yourself.</h5>
+
+                  <div class="col-sm-10 col-sm-offset-1">
+                    <div class="form-group">
+                      <label>Peso <small>(required)</small></label>
+                      <% if(currentUser) {%>
+                      <input
+                        name="peso"
+                        type="text"
+                        class="form-control"
+                        value="<%= currentUser.peso %>"
+                      />
+                      <% } else {%>
+                      <input name="peso" type="text" class="form-control" />
+                      <% } %>
+                    </div>
+                  </div>
+                  <div class="col-sm-10 col-sm-offset-1">
+                    <div class="form-group">
+                      <label>Altura <small>(required)</small></label>
+                      <% if(currentUser) {%>
+                      <input
+                        name="altura"
+                        type="text"
+                        class="form-control"
+                        value="<%= currentUser.altura %>"
+                      />
+                      <% } else {%>
+                      <input name="altura" type="text" class="form-control" />
+                      <% } %>
+                    </div>
+                  </div>
+                  <div class="col-sm-10 col-sm-offset-1">
+                    <div class="form-group">
+                      <label>Idade <small>(required)</small></label>
+                      <% if(currentUser) {%>
+                      <input
+                        name="idade"
+                        type="text"
+                        class="form-control"
+                        value="<%= currentUser.idade %>"
+                      />
+                      <% } else {%>
+                      <input name="idade" type="text" class="form-control" />
+                      <% } %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane" id="account">
+                <h5 class="info-text">What are you doing? (checkboxes)</h5>
+                <div class="row">
+                  <div class="col-sm-8 col-sm-offset-2">
+                    <div class="col-sm-6">
+                      <div class="choice" data-toggle="wizard-checkbox">
+                        <input type="checkbox" name="tipo" value="Força" />
+                        <div class="card card-checkboxes card-hover-effect">
+                          <i class="ti-paint-roller"></i>
+                          <p>Força</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="choice" data-toggle="wizard-checkbox">
+                        <input type="checkbox" name="tipo" value="Massa" />
+                        <div class="card card-checkboxes card-hover-effect">
+                          <i class="ti-paint-roller"></i>
+                          <p>Massa</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="choice" data-toggle="wizard-checkbox">
+                        <input type="checkbox" name="tipo" value="PerdaPeso" />
+                        <div class="card card-checkboxes card-hover-effect">
+                          <i class="ti-pencil-alt"></i>
+                          <p>Perda de Peso</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="choice" data-toggle="wizard-checkbox">
+                        <input
+                          type="checkbox"
+                          name="tipo"
+                          value="Resistencia"
+                        />
+                        <div class="card card-checkboxes card-hover-effect">
+                          <i class="ti-star"></i>
+                          <p>Resistência</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane" id="address">
+                <h5 class="info-text">What are you doing? (checkboxes)</h5>
+                <div class="row">
+                  <div class="col-sm-8 col-sm-offset-2">
+                    <div class="col-sm-4">
+                      <div class="choice" data-toggle="wizard-checkbox">
+                        <input type="checkbox" name="nivel" value="Iniciante" />
+                        <div class="card card-checkboxes card-hover-effect">
+                          <i class="ti-paint-roller"></i>
+                          <p>Iniciante</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="choice" data-toggle="wizard-checkbox">
+                        <input
+                          type="checkbox"
+                          name="nivel"
+                          value="Intermedio"
+                        />
+                        <div class="card card-checkboxes card-hover-effect">
+                          <i class="ti-pencil-alt"></i>
+                          <p>Intermédio</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="choice" data-toggle="wizard-checkbox">
+                        <input
+                          type="checkbox"
+                          name="nivel"
+                          value="Experiente"
+                        />
+                        <div class="card card-checkboxes card-hover-effect">
+                          <i class="ti-star"></i>
+                          <p>Experiente</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wizard-footer">
+              <div class="pull-right">
+                <input
+                  type="button"
+                  class="btn btn-next btn-fill btn-warning btn-wd"
+                  name="next"
+                  value="Next"
+                />
+                <input
+                  type="submit"
+                  class="btn btn-finish btn-fill btn-warning btn-wd"
+                  name="finish"
+                  value="Finish"
+                />
+              </div>
+
+              <div class="pull-left">
+                <input
+                  type="button"
+                  class="btn btn-previous btn-default btn-wd"
+                  name="previous"
+                  value="Previous"
+                />
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- wizard container -->
+    </div>
+  </div>
+</div>

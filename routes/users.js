@@ -22,5 +22,6 @@ router
   );
 
 router.get("/logout", users.logout);
+router.post("/user/completeProfile", catchAsync(users.completeProfile));
 
 module.exports = router;

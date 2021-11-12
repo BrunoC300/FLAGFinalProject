@@ -25,6 +25,10 @@ const WorkoutSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please insert the muscle group"],
   },
+  nivel: {
+    type: String,
+    required: [true, "Please insert your level of experience"],
+  },
   preco: {
     type: Number,
     required: [true, "Please add the price"],

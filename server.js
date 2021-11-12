@@ -123,9 +123,9 @@ app.get("/workouts", (req, res) => {
       }
     });
 });
-app.get("/add/:id", async (req, res) => {});
-
-app.get("/remove/:id", async (req, res) => {});
+app.get("/user/completeProfile", async (req, res) => {
+  res.render("workouts/find");
+});
 
 //Caso não encontre nenhuma das rotas por nós definidas mostra o erro "Page Not Found"
 app.all("*", (req, res, next) => {
