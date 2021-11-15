@@ -27,6 +27,7 @@ const isLoggedIn = require("./middleware/validations");
 // Route files
 const userRoutes = require("./routes/users");
 const exerciseRoutes = require("./routes/exercises");
+const workoutRoutes = require("./routes/workouts");
 
 // Load env vars
 // dotenv.config({ path: "./config/config.env" });
@@ -83,12 +84,23 @@ const PORT = process.env.PORT || 3000;
 
 app.use("/exercises", exerciseRoutes);
 app.use("/", userRoutes);
+app.use("/workouts", workoutRoutes);
 
 app.get("/", isLoggedIn.isLoggedIn, (req, res) => {
   res.render("index");
   req.flash("success", "Bem vindo!");
 });
-
+app.post("/test", (req, res) => {
+  console.log(res);
+  res.redirect("/");
+});
+// Exercise.find(function (err, exercises) {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     app.locals.exercicios = exercises;
+//   }
+// });
 app.get("/users", (req, res) => {
   User.find()
     .populate("exercicios_favoritos")
@@ -111,18 +123,7 @@ app.get("/users/:id", (req, res) => {
       }
     });
 });
-app.get("/workouts", (req, res) => {
-  Workout.find()
-    .populate("lista_exercicios.exercicio")
-    .populate("createdBy")
-    .exec(function (err, workouts) {
-      if (err) {
-        console.log(err);
-      } else {
-        res.render("workouts", { workouts: workouts });
-      }
-    });
-});
+app.get("/workouts", (req, res) => {});
 app.get("/user/completeProfile", async (req, res) => {
   res.render("workouts/find");
 });

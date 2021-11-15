@@ -1,0 +1,109 @@
+<% layout('layouts/boilerplate')%>
+<div class="row">
+  <h1 class="text-center">Criar Workout</h1>
+  <div class="col-6 offset-3">
+    <form
+      action="/workouts"
+      method="post"
+      novalidate
+      class="validated-form"
+      enctype="multipart/form-data"
+    >
+      <div class="mb-3">
+        <label class="form-label" for="nome">Nome</label>
+        <input
+          class="form-control"
+          type="text"
+          id="nome"
+          name="nome"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-3">
+        <label for="tipo">Tipo de Treino</label>
+
+        <select name="tipo" id="tipo">
+          <option value="Força">Força</option>
+          <option value="Massa">Massa</option>
+          <option value="PerdaPeso">Perda de Peso</option>
+          <option value="Resistencia">Resistência</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="duracao">Duração</label>
+        <input
+          class="form-control"
+          type="text"
+          id="duracao"
+          name="duracao"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-3">
+        <label for="grupoMuscular">Grupo Muscular</label>
+
+        <select name="grupoMuscular" id="grupoMuscular">
+          <option value="Peito">Peito</option>
+          <option value="Costas">Costas</option>
+          <option value="Bicep">Bicep</option>
+          <option value="Tricep">Tricep</option>
+          <option value="Ombros">Ombros</option>
+          <option value="Gemeos">Gémeos</option>
+          <option value="Quads">Quads</option>
+          <option value="Hamstrings">Hamstrings</option>
+          <option value="Abs">Abdominais</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="nivel">Nível do Treino</label>
+
+        <select name="nivel" id="nivel">
+          <option value="Peito">Iniciante</option>
+          <option value="Intermedio">Intermédio</option>
+          <option value="Bicep">Experiente</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="description">Descrição</label>
+        <textarea
+          class="form-control"
+          type="text"
+          id="description"
+          name="descricao"
+          required
+        ></textarea>
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-3 form-file custom-file">
+        <input type="file" class="form-file-input" id="image" name="image" />
+        <label class="form-file-label" for="image">
+          <span class="form-file-text custom-file-label"
+            >Adicionar mais imagens</span
+          >
+          <span class="form-file-button">Browse</span>
+        </label>
+      </div>
+      <div class="mb-3">
+        <% exercises.forEach(function(exercise,i) { %> <%
+        if(exercise.grupoMuscular==="Peito"){%>
+        <h5><%= exercise.name %></h5>
+        <div class="form-check-inline">
+          <input
+            type="checkbox"
+            id="exercise-<%=i%>"
+            name="ExercisesToAdd[]"
+            value="<%=exercise._id%>"
+          />
+          <label for="">Adicionar</label>
+        </div>
+        <% }%> <% })%>
+      </div>
+      <div class="mb-3">
+        <button class="btn btn-success">Adicionar Exercicio</button>
+      </div>
+    </form>
+    <a href="/exercises">Todos Exercicios</a>
+  </div>
+</div>

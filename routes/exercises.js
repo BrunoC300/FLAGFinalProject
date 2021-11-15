@@ -12,6 +12,7 @@ router
   .route("/")
   .get(catchAsync(exercise.index))
   .post(isLoggedIn, upload.array("image"), catchAsync(exercise.createExercise));
+
 router.get("/new", isLoggedIn, exercise.renderNewForm);
 
 router

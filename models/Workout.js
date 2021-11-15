@@ -31,7 +31,6 @@ const WorkoutSchema = new mongoose.Schema({
   },
   preco: {
     type: Number,
-    required: [true, "Please add the price"],
   },
   lista_exercicios: [
     {

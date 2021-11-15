@@ -6,7 +6,7 @@ const colors = require("colors");
 const dotenv = require("dotenv");
 
 // Load env vars
-dotenv.config({ path: "./config/config.env" });
+dotenv.config({ path: "./.env" });
 
 // Load models
 const User = require("./models/User");
@@ -34,8 +34,8 @@ const workouts = JSON.parse(
 const importData = async () => {
   try {
     //await User.create(users);
-    //await Exercise.create(exercises);
-    await Workout.create(workouts);
+    await Exercise.create(exercises);
+    //await Workout.create(workouts);
     console.log("Data Imported...".green.inverse);
     process.exit();
   } catch (err) {
@@ -47,8 +47,8 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     //await User.deleteMany();
-    //await Exercise.deleteMany();
-    await Workout.deleteMany();
+    await Exercise.deleteMany();
+    //await Workout.deleteMany();
     console.log("Data Destroyed...".red.inverse);
     process.exit();
   } catch (err) {

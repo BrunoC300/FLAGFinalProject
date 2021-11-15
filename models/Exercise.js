@@ -12,6 +12,10 @@ const ExerciseSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please add an exercise description"],
   },
+  grupoMuscular: {
+    type: String,
+    required: [true, "Please add an exercise description"],
+  },
   images: [
     {
       url: String,

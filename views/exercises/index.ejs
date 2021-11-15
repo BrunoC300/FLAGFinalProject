@@ -1,5 +1,27 @@
 <% layout('layouts/boilerplate')%>
 
+<div>
+  <h4>Filtrar por Grupo Muscular:</h4>
+  <div class="btn-group">
+    <a href="/exercises" class="btn btn-primary active" aria-current="page"
+      >Todos</a
+    >
+    <a href="/exercises?grupoMuscular=Peito" class="btn btn-primary">Peito</a>
+    <a href="/exercises?grupoMuscular=Costas" class="btn btn-primary">Costas</a>
+    <a href="/exercises?grupoMuscular=Gemeos" class="btn btn-primary">Gémeos</a>
+    <a href="/exercises?grupoMuscular=Ombros" class="btn btn-primary">Ombros</a>
+    <a href="/exercises?grupoMuscular=Bicep" class="btn btn-primary">Bicep</a>
+    <a href="/exercises?grupoMuscular=Tricep" class="btn btn-primary">Tricep</a>
+    <a href="/exercises?grupoMuscular=Quads" class="btn btn-primary">Quads</a>
+    <a href="/exercises?grupoMuscular=Hamstrings" class="btn btn-primary"
+      >Hamstrings</a
+    >
+    <a href="/exercises?grupoMuscular=Abs" class="btn btn-primary"
+      >Abdominais</a
+    >
+  </div>
+</div>
+
 <div class="container">
   <h1>All Exercises</h1>
 

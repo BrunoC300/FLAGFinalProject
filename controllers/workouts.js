@@ -1,36 +1,32 @@
 const { cloudinary } = require("../cloudinary");
 const Exercise = require("../models/Exercise");
 const User = require("../models/User");
+const Workout = require("../models/Workout");
 
 // @desc      Get all exercises
 // @route     GET /exercises
 // @access    Public
 
 module.exports.index = async (req, res) => {
-  if (req.query.grupoMuscular) {
-    Exercise.find(
-      { grupoMuscular: req.query.grupoMuscular },
-      function (err, exercises) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("Entra aqui");
-          res.render("exercises/index", { exercises: exercises });
-        }
+  await Workout.find()
+    .populate("lista_exercicios.exercicio")
+    .populate("createdBy")
+    .exec(function (err, workouts) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.render("workouts/index", { workouts: workouts });
       }
-    );
-  } else {
-    const exercises = await Exercise.find({});
-    res.render("exercises/index", { exercises: exercises });
-  }
+    });
 };
 
 // @desc      Show form to add a new Exercise
 // @route     GET /exercises/new
 // @access    Public
 
-module.exports.renderNewForm = (req, res) => {
-  res.render("exercises/new");
+module.exports.renderNewForm = async (req, res) => {
+  const exercises = await Exercise.find({});
+  res.render("workouts/new", { exercises: exercises });
 };
 
 // @desc      Create a new Exercise
@@ -38,10 +34,10 @@ module.exports.renderNewForm = (req, res) => {
 // @access    Private
 
 module.exports.createExercise = async (req, res) => {
-  const { name, descricao, grupoMuscular } = req.body;
+  const { name, descricao } = req.body;
 
   //Create exercise
-  const exercise = await new Exercise({ name, descricao, grupoMuscular });
+  const exercise = await new Exercise({ name, descricao });
   exercise.images = req.files.map((f) => ({
     url: f.path,
     filename: f.filename,
