@@ -14,7 +14,6 @@ module.exports.index = async (req, res) => {
         if (err) {
           console.log(err);
         } else {
-          console.log("Entra aqui");
           res.render("exercises/index", { exercises: exercises });
         }
       }

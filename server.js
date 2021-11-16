@@ -90,10 +90,7 @@ app.get("/", isLoggedIn.isLoggedIn, (req, res) => {
   res.render("index");
   req.flash("success", "Bem vindo!");
 });
-app.post("/test", (req, res) => {
-  console.log(res);
-  res.redirect("/");
-});
+
 // Exercise.find(function (err, exercises) {
 //   if (err) {
 //     console.log(err);
@@ -123,9 +120,8 @@ app.get("/users/:id", (req, res) => {
       }
     });
 });
-app.get("/workouts", (req, res) => {});
 app.get("/user/completeProfile", async (req, res) => {
-  res.render("workouts/find");
+  res.render("users/completeProfile");
 });
 
 //Caso não encontre nenhuma das rotas por nós definidas mostra o erro "Page Not Found"

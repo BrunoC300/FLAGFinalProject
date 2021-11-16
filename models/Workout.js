@@ -32,6 +32,12 @@ const WorkoutSchema = new mongoose.Schema({
   preco: {
     type: Number,
   },
+  images: [
+    {
+      url: String,
+      filename: String,
+    },
+  ],
   lista_exercicios: [
     {
       exercicio: {

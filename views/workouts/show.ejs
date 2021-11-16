@@ -1,0 +1,90 @@
+<% layout('layouts/boilerplate')%>
+
+<div class="row">
+  <div class="col-6">
+    <div id="workoutCarousel" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <% workout.images.forEach((img, i) => { %>
+        <div class="carousel-item <%= i === 0 ? 'active' : ''%>">
+          <img src="<%= img.url%>" class="d-block w-100" alt="" />
+        </div>
+        <% }) %>
+      </div>
+      <% if(workout.images.length > 1) {%>
+      <a
+        class="carousel-control-prev"
+        href="#workoutCarousel"
+        role="button"
+        data-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a
+        class="carousel-control-next"
+        href="#workoutCarousel"
+        role="button"
+        data-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+      <% } %>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="card-title"><%= workout.nome%></h3>
+        <p class="card-text">
+          <strong>Grupo Muscular: </strong><%= workout.grupoMuscular%>
+        </p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item text-muted"><%= workout.tipo%></li>
+        <li class="list-group-item">INSERIR DESCRIÇAO DO TREINO</li>
+      </ul>
+      <% if( currentUser && workout.createdBy.equals(currentUser._id)) {%>
+      <div class="card-body">
+        <a class="card-link btn btn-info" href="/workouts/<%=workout._id%>/edit"
+          >Edit</a
+        >
+        <form
+          class="d-inline"
+          action="/workouts/<%=workout._id%>?_method=DELETE"
+          method="POST"
+        >
+          <button class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+      <% } %>
+      <div class="card-footer text-muted">
+        Submitted by <%= workout.createdBy.username%>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <h3>Detalhes do Treino</h3>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nome Exercicio</th>
+          <th scope="col">Sets</th>
+          <th scope="col">Reps</th>
+          <th scope="col">Rest</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% workout.lista_exercicios.forEach((exercicios, i) => { %>
+        <tr>
+          <th scope="row"><%= i%></th>
+          <td><%= exercicios.exercicio.name%></td>
+          <td><%= exercicios.totalSets%></td>
+          <td><%= exercicios.reps%></td>
+          <td><%= exercicios.rest%></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

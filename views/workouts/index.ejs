@@ -1,0 +1,72 @@
+<% layout('layouts/boilerplate')%>
+
+<div>
+  <h4>Filtrar por Grupo Muscular:</h4>
+  <div class="btn-group">
+    <a href="/workouts" class="btn btn-primary active" aria-current="page"
+      >Todos</a
+    >
+    <a href="/workouts?grupoMuscular=Peito" class="btn btn-primary">Peito</a>
+    <a href="/workouts?grupoMuscular=Costas" class="btn btn-primary">Costas</a>
+    <a href="/workouts?grupoMuscular=Gemeos" class="btn btn-primary">Gémeos</a>
+    <a href="/workouts?grupoMuscular=Ombros" class="btn btn-primary">Ombros</a>
+    <a href="/workouts?grupoMuscular=Bicep" class="btn btn-primary">Bicep</a>
+    <a href="/workouts?grupoMuscular=Tricep" class="btn btn-primary">Tricep</a>
+    <a href="/workouts?grupoMuscular=Quads" class="btn btn-primary">Quads</a>
+    <a href="/workouts?grupoMuscular=Hamstrings" class="btn btn-primary"
+      >Hamstrings</a
+    >
+    <a href="/workouts?grupoMuscular=Abs" class="btn btn-primary">Abdominais</a>
+  </div>
+</div>
+
+<div class="container">
+  <h1>All workouts</h1>
+
+  <% for (let workout of workouts){%>
+  <div class="card mb-3">
+    <div class="row">
+      <div class="col-md-4">
+        <%if(workout.images.length) {%>
+        <img class="img-fluid" alt="" src="<%=workout.images[0].url%>" />
+        <% }else {%>
+        <img
+          class="img-fluid"
+          alt=""
+          src="https://res.cloudinary.com/douqbebwk/image/upload/v1600103881/YelpCamp/lz8jjv2gyynjil7lswf4.png"
+        />
+        <% } %>
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h3 class="card-title"><%= workout.nome %></h3>
+          <br />
+          <br />
+          <p class="card-text"><strong>Tipo: </strong><%= workout.tipo %></p>
+          <p class="card-text">
+            <strong>Grupo Muscular: </strong><%= workout.grupoMuscular %>
+          </p>
+          <p class="card-text">
+            <strong>Nível de Experiência: </strong><%= workout.nivel %>
+          </p>
+          <br />
+          <a class="btn btn-primary" href="/workouts/<%=workout._id%>"
+            >View <%=workout.name%></a
+          >
+          <% if(currentUser && !currentUser.exercicios_favoritos.includes(
+          workout._id )) {%>
+          <a class="btn btn-success" href="workouts/add/<%= workout._id%>"
+            >Add to Favorites</a
+          >
+          <% }else if(currentUser && currentUser.exercicios_favoritos.includes(
+          workout._id )){ %>
+          <a class="btn btn-danger" href="workouts/remove/<%= workout._id%>"
+            >Remove from Favorites</a
+          >
+          <%} %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% }%>
+</div>

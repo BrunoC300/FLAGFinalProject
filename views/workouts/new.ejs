@@ -10,6 +10,19 @@
       enctype="multipart/form-data"
     >
       <div class="mb-3">
+        <label class="form-label" for="createdBy">Criado Por</label>
+        <input
+          class="form-control"
+          type="text"
+          id="createdBy"
+          name="createdBy"
+          value="<%= currentUser.username %>"
+          readonly
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-3">
         <label class="form-label" for="nome">Nome</label>
         <input
           class="form-control"
@@ -65,19 +78,14 @@
           <option value="Bicep">Experiente</option>
         </select>
       </div>
-      <div class="mb-3">
-        <label class="form-label" for="description">Descrição</label>
-        <textarea
-          class="form-control"
-          type="text"
-          id="description"
-          name="descricao"
-          required
-        ></textarea>
-        <div class="valid-feedback">Looks good!</div>
-      </div>
       <div class="mb-3 form-file custom-file">
-        <input type="file" class="form-file-input" id="image" name="image" />
+        <input
+          type="file"
+          class="form-file-input"
+          id="image"
+          name="image"
+          multiple
+        />
         <label class="form-file-label" for="image">
           <span class="form-file-text custom-file-label"
             >Adicionar mais imagens</span
@@ -85,25 +93,11 @@
           <span class="form-file-button">Browse</span>
         </label>
       </div>
+
       <div class="mb-3">
-        <% exercises.forEach(function(exercise,i) { %> <%
-        if(exercise.grupoMuscular==="Peito"){%>
-        <h5><%= exercise.name %></h5>
-        <div class="form-check-inline">
-          <input
-            type="checkbox"
-            id="exercise-<%=i%>"
-            name="ExercisesToAdd[]"
-            value="<%=exercise._id%>"
-          />
-          <label for="">Adicionar</label>
-        </div>
-        <% }%> <% })%>
-      </div>
-      <div class="mb-3">
-        <button class="btn btn-success">Adicionar Exercicio</button>
+        <button class="btn btn-success">Seguinte</button>
       </div>
     </form>
-    <a href="/exercises">Todos Exercicios</a>
+    <a href="/workouts">Outros Treinos</a>
   </div>
 </div>
