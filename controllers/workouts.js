@@ -1,6 +1,8 @@
 const { cloudinary } = require("../cloudinary");
+const Exercise = require("../models/Exercise");
 const User = require("../models/User");
 const Workout = require("../models/Workout");
+const Details = require("../models/ExerciseDetails");
 
 module.exports.index = async (req, res) => {
   if (req.query.grupoMuscular) {
@@ -27,7 +29,12 @@ module.exports.index = async (req, res) => {
 module.exports.show = async (req, res) => {
   const { id } = req.params;
   await Workout.findById(id)
-    .populate("lista_exercicios.exercicio")
+    .populate({
+      path: "lista_exercicios",
+      populate: {
+        path: "exercicio",
+      },
+    })
     .populate("createdBy")
     .exec(function (err, workout) {
       if (err) {
@@ -44,7 +51,6 @@ module.exports.show = async (req, res) => {
 // @access    Public
 
 module.exports.renderNewForm = async (req, res) => {
-  console.log("enterei");
   res.render("workouts/new");
 };
 
@@ -73,19 +79,6 @@ module.exports.createWorkout = async (req, res) => {
   req.flash("success", "Escolha os exercicios!");
   res.render("workouts/show", { workout: workout });
 };
-module.exports.createWorkout2 = async (req, res) => {
-  const { name, descricao } = req.body;
-
-  //Create workout
-  const workout = await new Workout({ name, descricao });
-  workout.images = req.files.map((f) => ({
-    url: f.path,
-    filename: f.filename,
-  }));
-  workout.save();
-  req.flash("success", "Exercicio Criado!");
-  res.redirect("workouts/show");
-};
 
 // @desc      Show details of the specific workout
 // @route     Get /workouts/:id
@@ -97,12 +90,23 @@ module.exports.createWorkout2 = async (req, res) => {
 
 module.exports.renderEditForm = async (req, res) => {
   const { id } = req.params;
-  const workout = await workout.findById(id);
-  if (!workout) {
-    req.flash("error", "Esse exercicio não existe!");
-    return res.redirect("/workouts");
-  }
-  res.render("workouts/edit", { workout });
+  const exercises = await Exercise.find();
+  await Workout.findById(id)
+    .populate({
+      path: "lista_exercicios",
+      populate: {
+        path: "exercicio",
+      },
+    })
+    .populate("createdBy")
+    .exec(function (err, workout) {
+      if (err) {
+        req.flash("error", "Esse exercicio não existe!");
+        return res.redirect("/workouts");
+      } else {
+        res.render("workouts/edit", { workout: workout, exercises });
+      }
+    });
 };
 
 // @desc      Update workout details
@@ -111,7 +115,7 @@ module.exports.renderEditForm = async (req, res) => {
 
 module.exports.updateworkout = async (req, res) => {
   const { id } = req.params;
-  const workout = await workout.findByIdAndUpdate(id, {
+  const workout = await Workout.findByIdAndUpdate(id, {
     ...req.body,
   });
   const imgs = req.files.map((f) => ({ url: f.path, filename: f.filename }));
@@ -126,7 +130,7 @@ module.exports.updateworkout = async (req, res) => {
       $pull: { images: { filename: { $in: req.body.deleteImages } } },
     });
   }
-  req.flash("success", "Exercicio atualizado!");
+  req.flash("success", "Workout atualizado!");
   res.redirect(`/workouts/${workout._id}`);
 };
 
@@ -137,28 +141,26 @@ module.exports.updateworkout = async (req, res) => {
 module.exports.deleteworkout = async (req, res) => {
   const { id } = req.params;
   await workout.findByIdAndDelete(id);
-  res.flash("Success", "Exercicio Apagado!");
+  res.flash("Success", "Workout Apagado!");
   res.redirect("/workouts");
 };
 
-module.exports.addToFavorites = async (req, res) => {
-  const { id } = req.params;
-  const workout = await workout.findById(id);
-  const user = await User.findById(req.user._id);
-  user.exercicios_favoritos.push(workout);
-  user.save();
-  req.flash("success", "Exercicio adicionado aos favoritos");
-  setTimeout(function () {
-    res.redirect("/workouts");
-  }, 1000);
+module.exports.addExercises = async (req, res) => {
+  const workout = await Workout.findById(req.params.id);
+  const details = new Details(req.body.details);
+  workout.lista_exercicios.push(details);
+  await details.save();
+  await workout.save();
+  req.flash("success", "Adicionou novo Exercicio ao Workout!");
+  res.redirect(`/workouts/${workout._id}/edit`);
 };
 
-module.exports.removeFromFavorites = async (req, res) => {
-  const { id } = req.params;
-  const userID = req.user._id;
-  await User.findByIdAndUpdate(userID, { $pull: { exercicios_favoritos: id } });
-  req.flash("success", "Exercicio Removido dos favoritos");
-  setTimeout(function () {
-    res.redirect("/workouts");
-  }, 1000);
+module.exports.deleteExercise = async (req, res) => {
+  const { id, detailsId } = req.params;
+  await Workout.findByIdAndUpdate(id, {
+    $pull: { lista_exercicios: detailsId },
+  });
+  await Details.findByIdAndDelete(detailsId);
+  req.flash("success", "Removeu um Exercicio");
+  res.redirect(`/workouts/${id}`);
 };

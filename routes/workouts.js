@@ -15,6 +15,19 @@ router
 
 router.route("/new").get(isLoggedIn, catchAsync(workouts.renderNewForm));
 
-router.route("/:id").get(catchAsync(workouts.show));
+router
+  .route("/:id")
+  .get(catchAsync(workouts.show))
+  .put(isLoggedIn, upload.array("image"), catchAsync(workouts.updateworkout))
+  .delete(isLoggedIn, catchAsync(workouts.deleteExercise));
+
+router.get("/:id/edit", isLoggedIn, catchAsync(workouts.renderEditForm));
+
+router.post("/:id/addExercise", isLoggedIn, catchAsync(workouts.addExercises));
+router.delete(
+  "/:id/removeExercise",
+  isLoggedIn,
+  catchAsync(workouts.deleteExercise)
+);
 
 module.exports = router;

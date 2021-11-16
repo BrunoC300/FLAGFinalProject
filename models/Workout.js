@@ -19,7 +19,6 @@ const WorkoutSchema = new mongoose.Schema({
     type: Number,
     required: [true, "Please add a password"],
     minlength: 6,
-    select: false,
   },
   grupoMuscular: {
     type: String,
@@ -38,24 +37,16 @@ const WorkoutSchema = new mongoose.Schema({
       filename: String,
     },
   ],
+  treinos_guardados: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Exercise",
+    },
+  ],
   lista_exercicios: [
     {
-      exercicio: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Exercise",
-      },
-      totalSets: {
-        type: Number,
-        required: [true, "Please enter the number of sets"],
-      },
-      reps: {
-        type: Number,
-        required: [true, "Please enter the number of reps"],
-      },
-      rest: {
-        type: Number,
-        required: [true, "Please enter the rest time"],
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ExerciseDetails",
     },
   ],
   updated: { type: Date, default: Date.now },

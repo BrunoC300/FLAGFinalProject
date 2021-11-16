@@ -1,0 +1,201 @@
+<% layout('layouts/boilerplate')%>
+<h1 class="text-center">Editar Treino</h1>
+
+<div class="row">
+  <div class="col-4">
+    <form
+      action="/workouts/<%=workout._id%>?_method=PUT"
+      method="POST"
+      novalidate
+      class="validated-form"
+      enctype="multipart/form-data"
+    >
+      <div class="mb-3">
+        <label class="form-label" for="createdBy">Criado Por </label>
+        <input
+          class="form-control"
+          type="text"
+          id="createdBy"
+          name="createdBy"
+          value="<%= currentUser._id %>"
+          readonly
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="nome">Nome</label>
+        <input
+          class="form-control"
+          type="text"
+          id="nome"
+          name="nome"
+          value="<%=workout.nome%>"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="duracao">Duração</label>
+        <input
+          class="form-control"
+          type="text"
+          id="duracao"
+          name="duracao"
+          value="<%=workout.duracao%>"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-3">
+        <label for="tipo">1. Tipo de Treino </label>
+
+        <select name="tipo" id="tipo">
+          <option value="<%=workout.tipo%>" selected><%=workout.tipo%></option>
+          <option value="Força">Força</option>
+          <option value="Massa">Massa</option>
+          <option value="PerdaPeso">Perda de Peso</option>
+          <option value="Resistencia">Resistência</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="grupoMuscular">2. Grupo Muscular</label>
+
+        <select name="grupoMuscular" id="grupoMuscular">
+          <option value="<%=workout.grupoMuscular%>" selected>
+            <%=workout.grupoMuscular%>
+          </option>
+          <option value="Peito">Peito</option>
+          <option value="Costas">Costas</option>
+          <option value="Bicep">Bicep</option>
+          <option value="Tricep">Tricep</option>
+          <option value="Ombros">Ombros</option>
+          <option value="Gemeos">Gémeos</option>
+          <option value="Quads">Quads</option>
+          <option value="Hamstrings">Hamstrings</option>
+          <option value="Abs">Abdominais</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="nivel">3. Nível do Treino </label>
+
+        <select name="nivel" id="nivel">
+          <option value="<%=workout.nivel%>" selected>
+            <%=workout.nivel%>
+          </option>
+          <option value="Peito">Iniciante</option>
+          <option value="Intermedio">Intermédio</option>
+          <option value="Bicep">Experiente</option>
+        </select>
+      </div>
+      <div class="mb-3 form-file custom-file">
+        <input
+          type="file"
+          class="form-file-input"
+          id="image"
+          name="image"
+          multiple
+        />
+        <label class="form-file-label" for="image">
+          <span class="form-file-text custom-file-label"
+            >Adicionar mais imagens</span
+          >
+          <span class="form-file-button">Browse</span>
+        </label>
+      </div>
+
+      <div class="mb-3">
+        <button class="btn btn-success">Seguinte</button>
+      </div>
+    </form>
+    <a href="/workouts">Outros Treinos</a>
+  </div>
+  <div class="offset-1 col-7">
+    <h3>Detalhes do Treino</h3>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nome Exercicio</th>
+          <th scope="col">Sets</th>
+          <th scope="col">Reps</th>
+          <th scope="col">Rest</th>
+          <th scope="col">Remover</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% workout.lista_exercicios.forEach((exercicios, i) => { %>
+        <tr>
+          <th scope="row"><%= i%></th>
+          <td><%= exercicios.exercicio.name%></td>
+          <td><%= exercicios.totalSets%></td>
+          <td><%= exercicios.reps%></td>
+          <td><%= exercicios.rest%></td>
+          <td>
+            <form
+              action="/workouts/<%=workout._id%>/removeExercise?_method=DELETE"
+              method="POST"
+            >
+              <button class="btn btn-sm btn-danger">Delete</button>
+            </form>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <form
+      action="/workouts/<%=workout._id%>/addExercise"
+      method="POST"
+      novalidate
+      class="validated-form"
+    >
+      <div class="row">
+        <div class="mb-3">
+          <label for="exercicio">Lista de Exercicios</label>
+
+          <select name="details[exercicio]" id="exercicio">
+            <% for (let exercise of exercises){%>
+            <option value="<%=exercise._id%>"><%=exercise.name%></option>
+            <% } %>
+          </select>
+        </div>
+        <div class="col-4 mb-3">
+          <label class="form-label" for="sets">Sets</label>
+          <input
+            class="form-control"
+            type="text"
+            id="sets"
+            name="details[totalSets]"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <div class="col-4 mb-3">
+          <label class="form-label" for="Reps">Reps</label>
+          <input
+            class="form-control"
+            type="text"
+            id="Reps"
+            name="details[reps]"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <div class="col-4 mb-3">
+          <label class="form-label" for="rest">Rest</label>
+          <input
+            class="form-control"
+            type="text"
+            id="rest"
+            name="details[rest]"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <button class="btn btn-success">Adicionar Exercicio</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -6,3 +6,12 @@ module.exports.isLoggedIn = (req, res, next) => {
   }
   next();
 };
+module.exports.isAuthor = async (req, res, next) => {
+  const { id } = req.params;
+  const campground = await Campground.findById(id);
+  if (!campground.author.equals(req.user._id)) {
+    req.flash("error", "Não tem Permissões para realizar essa ação!");
+    return res.redirect(`/workouts/${id}`);
+  }
+  next();
+};

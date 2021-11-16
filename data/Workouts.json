@@ -8,20 +8,7 @@
     "grupoMuscular": "Peito",
     "preco": 15,
     "nivel": "Iniciante",
-    "lista_exercicios": [
-      {
-        "exercicio": "41224d776a326fb40f000001",
-        "totalSets": 4,
-        "reps": 10,
-        "rest": 90
-      },
-      {
-        "exercicio": "41224d776a326fb40f000002",
-        "totalSets": 4,
-        "reps": 10,
-        "rest": 90
-      }
-    ]
+    "lista_exercicios": []
   },
   {
     "_id": "6182a9f7b4117e790b208aa4",
@@ -32,19 +19,6 @@
     "grupoMuscular": "Costas",
     "preco": 10,
     "nivel": "Experiente",
-    "lista_exercicios": [
-      {
-        "exercicio": "41224d776a326fb40f000002",
-        "totalSets": 4,
-        "reps": 8,
-        "rest": 120
-      },
-      {
-        "exercicio": "41224d776a326fb40f000001",
-        "totalSets": 4,
-        "reps": 8,
-        "rest": 120
-      }
-    ]
+    "lista_exercicios": []
   }
 ]

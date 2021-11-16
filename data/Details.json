@@ -1,0 +1,26 @@
+[
+  {
+    "exercicio": "41224d776a326fb40f000001",
+    "totalSets": 4,
+    "reps": 8,
+    "rest": 120
+  },
+  {
+    "exercicio": "41224d776a326fb40f000002",
+    "totalSets": 4,
+    "reps": 20,
+    "rest": 60
+  },
+  {
+    "exercicio": "41224d776a326fb40f000003",
+    "totalSets": 3,
+    "reps": 12,
+    "rest": 120
+  },
+  {
+    "exercicio": "61915af658e343037c98950b",
+    "totalSets": 3,
+    "reps": 12,
+    "rest": 180
+  }
+]
