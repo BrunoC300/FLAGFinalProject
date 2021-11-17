@@ -1,6 +1,6 @@
 # FLAGFinalProject
 
-NOTA IMPORTANTE: Para testar a APP é necessário fazer seed do ficheiro "Exercises.Json", senão vai dar erro ao tentar adicionar exercicios a um treino.
+**NOTA IMPORTANTE: Para testar a APP é necessário fazer seed do ficheiro "Exercises.Json", senão vai dar erro ao tentar adicionar exercicios a um treino.**
 
 Na linha de comandos escreva: "node seeder -i". Se pretender popular a BD com mais algum dos ficheiros Json simplesmente entre no ficheiro "seeder.js" e remova as linhas comentadas na função "importData";
 
