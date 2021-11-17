@@ -156,11 +156,13 @@ module.exports.addExercises = async (req, res) => {
 };
 
 module.exports.deleteExercise = async (req, res) => {
-  const { id, detailsId } = req.params;
+  console.log(req.params);
+  const { id, exerciseID } = req.params;
+  console.log(id, exerciseID);
   await Workout.findByIdAndUpdate(id, {
-    $pull: { lista_exercicios: detailsId },
+    $pull: { lista_exercicios: exerciseID },
   });
-  await Details.findByIdAndDelete(detailsId);
-  req.flash("success", "Removeu um Exercicio");
+  await Details.findByIdAndDelete(exerciseID);
+  req.flash("success", "Removeu um Exercicio do Treino");
   res.redirect(`/workouts/${id}`);
 };

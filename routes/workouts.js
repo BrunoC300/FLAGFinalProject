@@ -25,7 +25,7 @@ router.get("/:id/edit", isLoggedIn, catchAsync(workouts.renderEditForm));
 
 router.post("/:id/addExercise", isLoggedIn, catchAsync(workouts.addExercises));
 router.delete(
-  "/:id/removeExercise",
+  "/:id/removeExercise/:exerciseID",
   isLoggedIn,
   catchAsync(workouts.deleteExercise)
 );

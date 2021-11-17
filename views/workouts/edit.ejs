@@ -126,6 +126,7 @@
       </thead>
       <tbody>
         <% workout.lista_exercicios.forEach((exercicios, i) => { %>
+        <h4><%= exercicios._id%></h4>
         <tr>
           <th scope="row"><%= i%></th>
           <td><%= exercicios.exercicio.name%></td>
@@ -134,7 +135,7 @@
           <td><%= exercicios.rest%></td>
           <td>
             <form
-              action="/workouts/<%=workout._id%>/removeExercise?_method=DELETE"
+              action="/workouts/<%=workout._id%>/removeExercise/<%= exercicios._id%>?_method=DELETE"
               method="POST"
             >
               <button class="btn btn-sm btn-danger">Delete</button>
