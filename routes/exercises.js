@@ -6,7 +6,7 @@ const multer = require("multer");
 const { storage } = require("../cloudinary");
 const Exercise = require("../models/Exercise");
 const upload = multer({ storage });
-const { isLoggedIn } = require("../middleware/validations");
+const { isLoggedIn, isExerciseAuthor } = require("../middleware/validations");
 
 router
   .route("/")
@@ -18,10 +18,20 @@ router.get("/new", isLoggedIn, exercise.renderNewForm);
 router
   .route("/:id")
   .get(catchAsync(exercise.showExercise))
-  .put(isLoggedIn, upload.array("image"), catchAsync(exercise.updateExercise))
-  .delete(isLoggedIn, catchAsync(exercise.deleteExercise));
+  .put(
+    isLoggedIn,
+    isExerciseAuthor,
+    upload.array("image"),
+    catchAsync(exercise.updateExercise)
+  )
+  .delete(isLoggedIn, isExerciseAuthor, catchAsync(exercise.deleteExercise));
 
-router.get("/:id/edit", isLoggedIn, catchAsync(exercise.renderEditForm));
+router.get(
+  "/:id/edit",
+  isLoggedIn,
+  isExerciseAuthor,
+  catchAsync(exercise.renderEditForm)
+);
 
 router.get("/add/:id", isLoggedIn, catchAsync(exercise.addToFavorites));
 

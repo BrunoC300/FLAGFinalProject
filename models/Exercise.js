@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 // const jwt = require("jsonwebtoken");
 
 const ExerciseSchema = new mongoose.Schema({
+  autor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
   name: {
     type: String,
     required: [true, "Please add a name"],

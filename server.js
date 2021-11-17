@@ -91,13 +91,6 @@ app.get("/", isLoggedIn.isLoggedIn, (req, res) => {
   req.flash("success", "Bem vindo!");
 });
 
-// Exercise.find(function (err, exercises) {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     app.locals.exercicios = exercises;
-//   }
-// });
 app.get("/users", (req, res) => {
   User.find()
     .populate("exercicios_favoritos")

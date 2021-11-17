@@ -37,17 +37,23 @@ module.exports.renderNewForm = (req, res) => {
 // @access    Private
 
 module.exports.createExercise = async (req, res) => {
-  const { name, descricao, grupoMuscular } = req.body;
+  const { autor, name, descricao, grupoMuscular } = req.body;
 
   //Create exercise
-  const exercise = await new Exercise({ name, descricao, grupoMuscular });
+  const exercise = await new Exercise({
+    autor,
+    name,
+    descricao,
+    grupoMuscular,
+  });
+  exercise.autor = req.user._id;
   exercise.images = req.files.map((f) => ({
     url: f.path,
     filename: f.filename,
   }));
   exercise.save();
   req.flash("success", "Exercicio Criado!");
-  res.redirect("exercises/show");
+  res.redirect(`exercises/${exercise._id}`);
 };
 
 // @desc      Show details of the specific exercise
@@ -111,7 +117,7 @@ module.exports.updateExercise = async (req, res) => {
 module.exports.deleteExercise = async (req, res) => {
   const { id } = req.params;
   await Exercise.findByIdAndDelete(id);
-  res.flash("Success", "Exercicio Apagado!");
+  req.flash("Success", "Exercicio Apagado!");
   res.redirect("/exercises");
 };
 
