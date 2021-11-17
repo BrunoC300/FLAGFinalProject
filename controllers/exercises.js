@@ -120,6 +120,9 @@ module.exports.deleteExercise = async (req, res) => {
   req.flash("Success", "Exercicio Apagado!");
   res.redirect("/exercises");
 };
+// @desc      Add Exercise to Favorites
+// @route     GET /exercises/add/:id
+// @access    Private
 
 module.exports.addToFavorites = async (req, res) => {
   const { id } = req.params;
@@ -133,6 +136,9 @@ module.exports.addToFavorites = async (req, res) => {
   }, 1000);
 };
 
+// @desc      Add Exercise to Favorites
+// @route     GET /exercises/remove/:id
+// @access    Private
 module.exports.removeFromFavorites = async (req, res) => {
   const { id } = req.params;
   const userID = req.user._id;

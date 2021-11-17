@@ -55,12 +55,12 @@
           <a class="btn btn-primary" href="/workouts/<%=workout._id%>"
             >View <%=workout.name%></a
           >
-          <% if(currentUser && !currentUser.exercicios_favoritos.includes(
+          <% if(currentUser && !currentUser.treinos_guardados.includes(
           workout._id )) {%>
           <a class="btn btn-success" href="workouts/add/<%= workout._id%>"
             >Add to Favorites</a
           >
-          <% }else if(currentUser && currentUser.exercicios_favoritos.includes(
+          <% }else if(currentUser && currentUser.treinos_guardados.includes(
           workout._id )){ %>
           <a class="btn btn-danger" href="workouts/remove/<%= workout._id%>"
             >Remove from Favorites</a

@@ -17,6 +17,8 @@ const passport = require("passport");
 const methodOverride = require("method-override");
 const LocalStrategy = require("passport-local");
 const ExpressError = require("./utils/ExpressError");
+const mongoSanitize = require("express-mongo-sanitize");
+const helmet = require("helmet");
 
 const Exercise = require("./models/Exercise");
 const User = require("./models/User");
@@ -28,9 +30,6 @@ const isLoggedIn = require("./middleware/validations");
 const userRoutes = require("./routes/users");
 const exerciseRoutes = require("./routes/exercises");
 const workoutRoutes = require("./routes/workouts");
-
-// Load env vars
-// dotenv.config({ path: "./config/config.env" });
 
 // Connect to database
 connectDB();
@@ -46,6 +45,57 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+// To remove data, use:
+app.use(mongoSanitize());
+
+//app.use(helmet());
+//Se tiver a causar algum erro:
+//app.use(helmet({contentSecurityPolicy:false}));
+
+// const scriptSrcUrls = [
+//   "https://stackpath.bootstrapcdn.com",
+//   "https://api.tiles.mapbox.com",
+//   "https://api.mapbox.com",
+//   "https://kit.fontawesome.com",
+//   "https://cdnjs.cloudflare.com",
+//   "https://cdn.jsdelivr.net",
+// ];
+// const styleSrcUrls = [
+//   "https://kit-free.fontawesome.com",
+//   "https://stackpath.bootstrapcdn.com",
+//   "https://api.mapbox.com",
+//   "https://api.tiles.mapbox.com",
+//   "https://fonts.googleapis.com",
+//   "https://use.fontawesome.com",
+// ];
+// const connectSrcUrls = [
+//   "https://api.mapbox.com",
+//   "https://*.tiles.mapbox.com",
+//   "https://events.mapbox.com",
+// ];
+// const fontSrcUrls = [];
+// app.use(
+//   helmet.contentSecurityPolicy({
+//     directives: {
+//       defaultSrc: [],
+//       connectSrc: ["'self'", ...connectSrcUrls],
+//       scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+//       styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+//       workerSrc: ["'self'", "blob:"],
+//       childSrc: ["blob:"],
+//       objectSrc: [],
+//       imgSrc: [
+//         "'self'",
+//         "blob:",
+//         "data:",
+//         "https://res.cloudinary.com/djmktzg7c/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT!
+//         "https://images.unsplash.com",
+//       ],
+//       fontSrc: ["'self'", ...fontSrcUrls],
+//     },
+//   })
+// );
 
 const sessionConfig = {
   secret: "thisshouldbeabettersecret!",
@@ -78,9 +128,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// Mount routers
-
 const PORT = process.env.PORT || 3000;
+
+// Mount routers
 
 app.use("/exercises", exerciseRoutes);
 app.use("/", userRoutes);
@@ -89,32 +139,6 @@ app.use("/workouts", workoutRoutes);
 app.get("/", isLoggedIn.isLoggedIn, (req, res) => {
   res.render("index");
   req.flash("success", "Bem vindo!");
-});
-
-app.get("/users", (req, res) => {
-  User.find()
-    .populate("exercicios_favoritos")
-    .exec(function (err, users) {
-      if (err) {
-        console.log(err);
-      } else {
-        res.render("users", { users: users });
-      }
-    });
-});
-app.get("/users/:id", (req, res) => {
-  User.findById(req.params.id)
-    .populate("exercicios_favoritos")
-    .exec(function (err, userFound) {
-      if (err) {
-        console.log(err);
-      } else {
-        res.render("userOne", { user: userFound });
-      }
-    });
-});
-app.get("/user/completeProfile", async (req, res) => {
-  res.render("users/completeProfile");
 });
 
 //Caso não encontre nenhuma das rotas por nós definidas mostra o erro "Page Not Found"

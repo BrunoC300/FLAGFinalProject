@@ -28,9 +28,6 @@ const WorkoutSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please insert your level of experience"],
   },
-  preco: {
-    type: Number,
-  },
   images: [
     {
       url: String,

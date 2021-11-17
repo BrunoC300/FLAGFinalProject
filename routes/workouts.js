@@ -46,4 +46,8 @@ router.delete(
   catchAsync(workouts.deleteExercise)
 );
 
+router.get("/add/:id", isLoggedIn, catchAsync(workouts.addToFavorites));
+
+router.get("/remove/:id", isLoggedIn, catchAsync(workouts.removeFromFavorites));
+
 module.exports = router;

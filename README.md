@@ -1,8 +1,6 @@
 # FLAGFinalProject
 
-NOTA IMPORTANTE: Para testar a APP é necessário fazer seed do ficheiro "Exercises.Json", senão vai dar erro ao tentar adicionar exercicios a um treino.
-
-Na linha de comandos escreva: "node seeder -i". Se pretender popular a BD com mais algum dos ficheiros Json simplesmente entre no ficheiro "seeder.js" e remova as linhas comentadas na função "importData";
+NOTA IMPORTANTE: Para testar a APP é necessário (Inicialmente) seguir a seguinte ordem: Registar User->Criar Exercicio->Criar Treino->Editar Treino
 
 Funcionalidades da APP:
 
@@ -29,3 +27,7 @@ Funcionalidades da APP:
 - Adicionar e Remover Treinos dos favoritos.
 - Filtrar por Grupo Muscular
 - Adicionar/Remover Exercicios ao Treino, em que especificamos não só o nome do exercicio mas também o número de sets,reps e descanso.
+
+--> Em termos de views:
+
+Apesar de não ser necessário para a avaliação quis na mesma que o avaliador tivesse capacidade para visualizar as funcionalidades de forma mais clara.

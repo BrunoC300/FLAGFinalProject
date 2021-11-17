@@ -51,10 +51,10 @@ const importData = async () => {
 // Delete data
 const deleteData = async () => {
   try {
-    //await User.deleteMany();
-    //await Exercise.deleteMany();
-    //await Workout.deleteMany();
-    //await Details.deleteMany();
+    await User.deleteMany();
+    await Exercise.deleteMany();
+    await Workout.deleteMany();
+    await Details.deleteMany();
     console.log("Data Destroyed...".red.inverse);
     process.exit();
   } catch (err) {
