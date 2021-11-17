@@ -1,6 +1,6 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">MuscleFit</a>
+    <a class="navbar-brand" href="/">MuscleFit</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -28,7 +28,9 @@
         <a class="nav-link" href="/login">Login</a>
         <a class="nav-link" href="/register">Register</a>
         <% } else {%>
-        <a class="nav-link" href="#"><%= currentUser.username %></a>
+        <a class="nav-link" href="/currentUser._id/completeProfile"
+          ><%= currentUser.username %></a
+        >
         <a class="nav-link" href="/logout">Logout</a>
         <% } %>
       </div>

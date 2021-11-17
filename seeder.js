@@ -38,8 +38,8 @@ const details = JSON.parse(
 const importData = async () => {
   try {
     //await User.create(users);
-    //await Exercise.create(exercises);
-    await Workout.create(workouts);
+    await Exercise.create(exercises);
+    //await Workout.create(workouts);
     //await Details.create(details);
     console.log("Data Imported...".green.inverse);
     process.exit();
@@ -53,7 +53,7 @@ const deleteData = async () => {
   try {
     //await User.deleteMany();
     //await Exercise.deleteMany();
-    await Workout.deleteMany();
+    //await Workout.deleteMany();
     //await Details.deleteMany();
     console.log("Data Destroyed...".red.inverse);
     process.exit();

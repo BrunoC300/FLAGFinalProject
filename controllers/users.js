@@ -16,7 +16,7 @@ module.exports.register = async (req, res, next) => {
         return next(err);
       }
       req.flash("success", "Bem vindo!");
-      res.redirect("/user/completeProfile");
+      res.redirect(`/${user._id}/completeProfile`);
     });
   } catch (e) {
     req.flash("error", e.message);
@@ -25,7 +25,6 @@ module.exports.register = async (req, res, next) => {
 };
 
 module.exports.completeProfile = async (req, res, next) => {
-  console.log("ENTREI");
   const { peso, idade, altura, tipo, nivel } = req.body;
   const id = req.user._id;
   console.log(id);
@@ -44,6 +43,9 @@ module.exports.completeProfile = async (req, res, next) => {
 
 module.exports.renderLogin = (req, res) => {
   res.render("users/login");
+};
+module.exports.renderProfile = (req, res) => {
+  res.render("users/completeProfile");
 };
 
 module.exports.login = (req, res) => {
